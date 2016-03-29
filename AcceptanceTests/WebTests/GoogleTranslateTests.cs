@@ -19,5 +19,12 @@ namespace AcceptanceTests.WebTests
                     Is.EqualTo("Good morning sir"));
             }
         }
+
+        [Test]
+        public void GetPath()
+        {
+            string date = System.DateTime.Now.ToString("yyyyMMdd-HHmmssfff");
+            string testName = NUnit.Framework.TestContext.CurrentContext.Test.Name;
+        }
     }
 }
