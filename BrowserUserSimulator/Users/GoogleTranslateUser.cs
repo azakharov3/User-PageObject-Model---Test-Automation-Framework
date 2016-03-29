@@ -1,5 +1,4 @@
-﻿using BrowserUserSimulator.Pages;
-using BrowserUserSimulator.Pages.GoogleTranslage;
+﻿using BrowserUserSimulator.Pages.GoogleTranslage;
 
 namespace BrowserUserSimulator.Users
 {
