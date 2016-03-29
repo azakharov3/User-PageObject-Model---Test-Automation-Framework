@@ -4,7 +4,7 @@ using System;
 
 namespace BrowserUserSimulator
 {
-    public abstract class BaseWebUser
+    public abstract class BaseWebUser : IDisposable
     {
         protected IWebDriver driver;
         private string webDriverServerUrl;
@@ -37,6 +37,11 @@ namespace BrowserUserSimulator
         public void CloseBrowser()
         {
             driver.Quit();
+        }
+
+        public void Dispose()
+        {
+            CloseBrowser();
         }
     }
 }
