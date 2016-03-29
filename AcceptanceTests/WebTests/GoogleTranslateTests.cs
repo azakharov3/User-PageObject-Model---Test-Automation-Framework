@@ -8,14 +8,15 @@ namespace AcceptanceTests.WebTests
         [Test]
         public void CanDetectSpanishAutomatically()
         {
-            usersInTestSession.Add(new GoogleTranslateUser(ConfigManager.BrowserName));
-            var googleTranslateUser = (GoogleTranslateUser)usersInTestSession[0];
-            googleTranslateUser.GoogleTranslatePage.Open();
-            googleTranslateUser.GoogleTranslatePage.TypeInSourceField(
-                "Buenos dias, señor");
-            Assert.That(
-                googleTranslateUser.GoogleTranslatePage.Translation,
-                Is.EqualTo("Good morning sir"));
+            using (var googleTranslateUser = new GoogleTranslateUser(ConfigManager.BrowserName))
+            {
+                googleTranslateUser.GoogleTranslatePage.Open();
+                googleTranslateUser.GoogleTranslatePage.TypeInSourceField(
+                    "Buenos dias, señor");
+                Assert.That(
+                    googleTranslateUser.GoogleTranslatePage.Translation,
+                    Is.EqualTo("Good morning sir"));
+            }
         }
     }
 }

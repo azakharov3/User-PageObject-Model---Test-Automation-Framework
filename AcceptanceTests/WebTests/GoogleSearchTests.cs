@@ -6,28 +6,24 @@ namespace AcceptanceTests.WebTests
 {
     public class GoogleSearchTests : BaseWebTest
     {
-        [SetUp]
-        public void TestSetup()
-        {    
-            usersInTestSession.Add(new GoogleSearchUser(ConfigManager.BrowserName));
-        }
-
         [Test]
         public void CanSearchForCatVideos()
         {
-            var catLover = (GoogleSearchUser)usersInTestSession[0];
-            catLover.GoogleMainPage.Open();
-            catLover.GoogleMainPage.SearchFor("cute cats");
-            var searchResults = catLover.SearchResultPage.ResultHealines;
-            Assert.That(searchResults.Count, Is.GreaterThan(5), "the results count is low");
-            CollectionAssert.AllItemsAreNotNull(
-                searchResults);
-            CollectionAssert.AllItemsAreUnique(
-                searchResults,
-                "There are some duplicates");
-            Assert.That(
-                searchResults.FirstOrDefault(result => result.ToLower().Contains("cat")),
-                Is.Not.Null);
+            using (var catLover = new GoogleSearchUser(ConfigManager.BrowserName))
+            {
+                catLover.GoogleMainPage.Open();
+                catLover.GoogleMainPage.SearchFor("cute cats");
+                var searchResults = catLover.SearchResultPage.ResultHealines;
+                Assert.That(searchResults.Count, Is.GreaterThan(5), "the results count is low");
+                CollectionAssert.AllItemsAreNotNull(
+                    searchResults);
+                CollectionAssert.AllItemsAreUnique(
+                    searchResults,
+                    "There are some duplicates");
+                Assert.That(
+                    searchResults.FirstOrDefault(result => result.ToLower().Contains("cat")),
+                    Is.Not.Null);
+            }
         }
     }
 }
