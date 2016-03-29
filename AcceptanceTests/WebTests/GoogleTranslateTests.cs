@@ -3,6 +3,7 @@ using NUnit.Framework;
 
 namespace AcceptanceTests.WebTests
 {
+    [Parallelizable]
     class GoogleTranslateTests : BaseWebTest
     {
         [Test]

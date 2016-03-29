@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace AcceptanceTests.WebTests
 {
+    [Parallelizable]
     public class GoogleSearchTests : BaseWebTest
     {
         [Test]
