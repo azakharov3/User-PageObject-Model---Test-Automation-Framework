@@ -1,6 +1,8 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Support.Extensions;
 using System;
+using System.Drawing.Imaging;
 
 namespace BrowserUserSimulator
 {
@@ -15,6 +17,11 @@ namespace BrowserUserSimulator
             this.browserName = browserName;
             this.webDriverServerUrl = webDriverServerUrl;
             OpenBrowserSession(browserName, webDriverServerUrl);
+        }
+
+        public void Dispose()
+        {
+            CloseBrowser();
         }
 
         private void OpenBrowserSession(
@@ -39,9 +46,13 @@ namespace BrowserUserSimulator
             driver.Quit();
         }
 
-        public void Dispose()
+        /// <summary>
+        /// Saves a screeshot at a specified path
+        /// </summary>
+        /// <param name="filePath">Screenshot filepath</param>
+        public void SaveScreenshot(string filePath)
         {
-            CloseBrowser();
+            driver.TakeScreenshot().SaveAsFile(filePath, ImageFormat.Png);
         }
     }
 }
