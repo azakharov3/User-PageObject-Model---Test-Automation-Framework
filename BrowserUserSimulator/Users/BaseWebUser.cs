@@ -9,15 +9,11 @@ namespace BrowserUserSimulator
     public abstract class BaseWebUser : IDisposable
     {
         protected IWebDriver driver;
-        private string webDriverServerUrl;
-        private string browserName;
-        private bool disposing;
-        private bool disposed;
+        private bool disposing = false;
+        private bool disposed = false;
 
         public BaseWebUser(string browserName, string webDriverServerUrl = null)
         {
-            this.browserName = browserName;
-            this.webDriverServerUrl = webDriverServerUrl;
             OpenBrowserSession(browserName, webDriverServerUrl);
         }
 
@@ -31,8 +27,8 @@ namespace BrowserUserSimulator
         {
             disposing = true;
             CloseBrowser();
-            disposing = false;
             disposed = true;
+            disposing = false;
         }
 
         private void OpenBrowserSession(
