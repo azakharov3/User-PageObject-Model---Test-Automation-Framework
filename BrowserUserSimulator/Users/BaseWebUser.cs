@@ -11,6 +11,8 @@ namespace BrowserUserSimulator
         protected IWebDriver driver;
         private string webDriverServerUrl;
         private string browserName;
+        private bool disposing;
+        private bool disposed;
 
         public BaseWebUser(string browserName, string webDriverServerUrl = null)
         {
@@ -19,9 +21,18 @@ namespace BrowserUserSimulator
             OpenBrowserSession(browserName, webDriverServerUrl);
         }
 
+        ~BaseWebUser()
+        {
+            if (!disposed && !disposing)
+                Dispose();
+        }
+
         public void Dispose()
         {
+            disposing = true;
             CloseBrowser();
+            disposing = false;
+            disposed = true;
         }
 
         private void OpenBrowserSession(
@@ -34,7 +45,7 @@ namespace BrowserUserSimulator
             }
             else
             {
-                throw new NotImplementedException("Unknown configuration requested");
+                throw new InvalidOperationException("Unknown configuration requested");
             }
         }
 
@@ -43,6 +54,7 @@ namespace BrowserUserSimulator
         /// </summary>
         public void CloseBrowser()
         {
+            Console.WriteLine("Closing browser");
             driver.Quit();
         }
 
