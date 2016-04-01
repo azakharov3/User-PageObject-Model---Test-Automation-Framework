@@ -12,7 +12,12 @@ namespace AcceptanceTests.WebTests
         [TearDown]
         public void TestTearDown()
         {
-            usersInCurrentSession.ForEach(user => user.Dispose());
+            bool testPassed =
+                TestContext.CurrentContext.Result.Outcome == NUnit.Framework.Interfaces.ResultState.Success;
+            foreach(var user in usersInCurrentSession)
+            {
+                user.Dispose();
+            }
         }
     }
 }
