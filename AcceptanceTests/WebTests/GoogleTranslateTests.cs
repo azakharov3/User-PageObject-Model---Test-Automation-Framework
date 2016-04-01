@@ -6,7 +6,6 @@ namespace AcceptanceTests.WebTests
     [Parallelizable]
     class GoogleTranslateTests : BaseWebTest
     {
-
         [Test]
         public void CanDetectSpanishAutomatically()
         {
