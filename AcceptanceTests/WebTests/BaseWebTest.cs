@@ -16,6 +16,13 @@ namespace AcceptanceTests.WebTests
                 TestContext.CurrentContext.Result.Outcome == NUnit.Framework.Interfaces.ResultState.Success;
             foreach(var user in usersInCurrentSession)
             {
+                if (!testPassed)
+                {
+                    string testName = TestContext.CurrentContext.Test.Name;
+                    string fullDate = System.DateTime.Now.ToString("yyyyMMdd-HHmmssfff");
+                    string fullScreenshotPath = $"{ConfigManager.ScreenshotsDirectory}{testName}{fullDate}";
+                    user.SaveScreenshot(fullScreenshotPath);
+                }
                 user.Dispose();
             }
         }
