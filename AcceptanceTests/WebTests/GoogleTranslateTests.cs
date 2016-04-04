@@ -6,11 +6,18 @@ namespace AcceptanceTests.WebTests
     [Parallelizable]
     class GoogleTranslateTests : BaseWebTest
     {
+        private GoogleTranslateUser googleTranslateUser;
+
+        [SetUp]
+        public void GoogleTranslateTestsSetup()
+        {
+            usersInCurrentSession.Add(new GoogleTranslateUser(ConfigManager.BrowserName));
+            googleTranslateUser = (GoogleTranslateUser)usersInCurrentSession[0];
+        }
+
         [Test]
         public void CanDetectSpanishAutomatically()
         {
-            usersInCurrentSession.Add(new GoogleTranslateUser(ConfigManager.BrowserName));
-            var googleTranslateUser = (GoogleTranslateUser) usersInCurrentSession[0];
             googleTranslateUser.GoogleTranslatePage.Open();
             googleTranslateUser.GoogleTranslatePage.TypeInSourceField(
                 "Buenos dias, señor");
@@ -20,10 +27,14 @@ namespace AcceptanceTests.WebTests
         }
 
         [Test]
-        public void GetPath()
+        public void TestThatFailsIntentionally()
         {
-            string date = System.DateTime.Now.ToString("yyyyMMdd-HHmmssfff");
-            string testName = NUnit.Framework.TestContext.CurrentContext.Test.Name;
+            googleTranslateUser.GoogleTranslatePage.Open();
+            googleTranslateUser.GoogleTranslatePage.TypeInSourceField(
+                "Buenos dias, señor");
+            Assert.That(
+                googleTranslateUser.GoogleTranslatePage.Translation,
+                Is.EqualTo("Good morning mister"));
         }
     }
 }

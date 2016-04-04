@@ -16,14 +16,20 @@ namespace AcceptanceTests.WebTests
                 TestContext.CurrentContext.Result.Outcome == NUnit.Framework.Interfaces.ResultState.Success;
             foreach(var user in usersInCurrentSession)
             {
+                string screeshotPaths = string.Empty;
                 if (!testPassed)
                 {
                     string testName = TestContext.CurrentContext.Test.Name;
                     string fullDate = System.DateTime.Now.ToString("yyyyMMdd-HHmmssfff");
-                    string fullScreenshotPath = $"{ConfigManager.ScreenshotsDirectory}{testName}{fullDate}";
+                    string fullScreenshotPath = $"{ConfigManager.ScreenshotsDirectory}{testName}{fullDate}.png";
                     user.SaveScreenshot(fullScreenshotPath);
+                    screeshotPaths += $"\n{fullScreenshotPath}";
                 }
                 user.Dispose();
+                if (!testPassed)
+                {
+                    Assert.Fail($"Test failed. See screenshots at: {screeshotPaths}");
+                }
             }
         }
     }
