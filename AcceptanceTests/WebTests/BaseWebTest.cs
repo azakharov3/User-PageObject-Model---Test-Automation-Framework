@@ -14,9 +14,9 @@ namespace AcceptanceTests.WebTests
         {
             bool testPassed =
                 TestContext.CurrentContext.Result.Outcome == NUnit.Framework.Interfaces.ResultState.Success;
-            foreach(var user in usersInCurrentSession)
+            string screeshotPaths = string.Empty;
+            foreach (var user in usersInCurrentSession)
             {
-                string screeshotPaths = string.Empty;
                 if (!testPassed)
                 {
                     string testName = TestContext.CurrentContext.Test.Name;
@@ -26,10 +26,10 @@ namespace AcceptanceTests.WebTests
                     screeshotPaths += $"\n{fullScreenshotPath}";
                 }
                 user.Dispose();
-                if (!testPassed)
-                {
-                    Assert.Fail($"Test failed. See screenshots at: {screeshotPaths}");
-                }
+            }
+            if (!testPassed)
+            {
+                Assert.Fail($"Test failed. See screenshots at: {screeshotPaths}");
             }
         }
     }
